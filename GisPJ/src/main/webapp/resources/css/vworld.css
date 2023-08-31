@@ -1,0 +1,151 @@
+
+  /* 전체 페이지 스타일 */
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  /* 사이드바 스타일 */
+  .sidebar {
+    width: 20%;
+    height: 100vh;
+    background-color: rgb(247, 247, 247);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    box-sizing: border-box;
+  }
+  
+  /* 상단 텍스트 스타일 */
+  .top-text {
+    font-size: 17px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  /* 박스 스타일 */
+  .box {
+    width: 80%;
+    margin: 20px 0;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 3px 3px 7px rgba(37, 37, 37, 0.3);
+  }
+  
+  .st {
+    height: 100px; /* 첫번째 박스의 세로 길이 */
+    border-bottom: 1px solid #ccc;
+  }
+
+    /* 버튼 스타일 */
+  .box.st {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3px;
+  }
+
+  .box.nd {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-primary {
+    padding: 5px 10px;
+    margin: 2px;
+    background-color: white;
+    border: 1px solid rgb(42, 42, 245);
+    border-radius: 5px;
+    color: rgb(42, 42, 245);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 15px;
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(42, 42, 245);
+    color: white;
+  }
+
+  .vehicle{
+    border: none;
+    background-color: transparent;
+    background-color: white;
+    border: 1px solid white;
+  }
+
+  .rd {
+    height: 300px; /* 세번째 박스의 세로 길이 */
+    border-bottom: 1px solid #ccc;
+  }
+
+  .box.rd {
+    padding: 10px;
+  }
+
+  .box.rd .details {
+    margin: 10px;
+  }
+
+  .box.rd .details div {
+    margin: 5px;
+  }
+
+  .carNum{
+    display: block;
+    font-weight: bold; 
+    margin-left: 10px; 
+    margin-top: 10px;
+  }
+  
+  .folded{
+    margin-right: 10px; 
+    padding: 3px 6px; 
+    float: right; 
+    border: none;
+    background-color: transparent;
+    color: rgb(54, 53, 53);
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  #nonhidden {
+	display: none;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  /* 메인 컨텐츠 스타일 */
+  .content {
+    flex: 3; /* 가로 3/4 */
+    background-color: #ffffff;
+  }
+
+
+  /*map*/
+    body {
+        margin: 0;
+    }
+    .map {
+        width: 100%;
+        height: 100%;
+    }
+    #baseLayer {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 1;
+    }

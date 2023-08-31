@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gis.mapper.GisMapper">
+	<select id="gisList" resultType="com.gis.vo.GisVO">
+		select distinct car_num from points
+	</select>
+	
+	<select id="getCarInfo" resultType="com.gis.vo.GisVO">
+	    SELECT 
+	        (SELECT TO_CHAR(MAX("time")::time - MIN("time"), 'HH24:MI:SS') AS timediff
+	            FROM points
+	            WHERE car_num = #{carNum} AND date = #{date}) AS "time",
+	        (SELECT 
+	            CASE 
+	                WHEN (SELECT COUNT(*) FROM points WHERE car_num = #{carNum} AND date = #{date}) = 0
+	                THEN null
+	                ELSE TRUNC((COUNT(*)::float / (SELECT COUNT(*) FROM points WHERE car_num = #{carNum} AND date = #{date})*100)::numeric,2)
+	            END
+	            FROM points
+	            WHERE car_num = #{carNum} AND date = #{date} AND noise >= 80 AND rpm >= 1500) AS ratio
+	</select>
+	
+</mapper>
