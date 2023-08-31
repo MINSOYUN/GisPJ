@@ -53,7 +53,7 @@
         <button id="normal" class="btn btn-primary" type="button">기본</button>
         <button id="wisung"  class="btn btn-primary" type="button">위성</button>
         <button id="hybrid" class="btn btn-primary" type="button">하이브리드</button>
-    </div>
+    </div> 
 
     <div class="box nd" style="margin: 0px; padding-top: 20px;">
       <strong style="display: block; font-weight: bold;">차량 목록</strong>
@@ -67,7 +67,7 @@
       <strong class="carNum">${car.car_num }</strong>
       <hr>
       <div class="details" style=" text-align:left;">
-        <div style="margin: 30px 0px;">날짜선택 : <input type="date" id="selectedDate"><button class="btn btn-primary" style="padding: 3px 6px; margin-left: 8px;">확인</button></div>
+        <div style="margin: 30px 0px;">날짜선택 : <input type="date" id="selectedDate"><button class="btn btn-primary" id="confirmButton" style="padding: 3px 6px; margin-left: 8px;">확인</button></div>
         <div style="margin: 30px 0px;">운행시간 : 08:15:14</div>
         <div style="margin: 30px 0px;">청소비율 : 85%</div>
       </div>
