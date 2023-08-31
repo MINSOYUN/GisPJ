@@ -21,7 +21,7 @@
 	<!-- postgreSQL -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
        <property name="driverClassName" value="org.postgresql.Driver"></property>
-       <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/opentutorials"></property>
+       <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/map"></property>
        <property name="username" value="postgres"></property>
        <property name="password" value="1234"></property>
     </bean>

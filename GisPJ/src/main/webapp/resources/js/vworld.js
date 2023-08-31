@@ -54,21 +54,17 @@ $("#confirmButton").click(function() {
   
     console.log('car_num : ',car_num);
     
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(responseData => {
-      console.log('Response from server:', responseData);
-      
-    })
-  	  .catch(error => {
-  	    console.error('Error:', error);
-  	  });
+    try{
+        fetch(url
+              , {method : 'post' 
+                 , headers : {'Content-Type' : 'application/json'}
+                 , body : JSON.stringify(data)})
+           .then(response => response.json())
+           .then(map => addNewLayer(map));
+     } catch(e){
+        console.log('fetchPost', e);
+     }
+     
     
     var Clean_O = new ol.layer.Tile({
         source: new ol.source.TileWMS({

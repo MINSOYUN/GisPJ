@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class GisVO {
 	private String gid;
-	private String lon;  // 경도
-	private String lat;   // 위도
+	private String lon;  // 寃쎈룄
+	private String lat;   // �쐞�룄
 	private String date;
 	private String time;
 	private String geom;
@@ -15,4 +15,6 @@ public class GisVO {
 	private String rpm;
 	
 	private String ratio;
+	
+	private String carNum;
 }

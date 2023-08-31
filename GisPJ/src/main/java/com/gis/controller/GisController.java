@@ -37,19 +37,11 @@ public class GisController {
 	
 	@PostMapping("/carinfo")
     @ResponseBody
-    public String carinfo(@RequestBody GisVO vo) {
-		System.out.println("vo : "+ vo);
-		String res = "";
-		try {
-			
-			GisVO info = service.getCarInfo(vo);
-//		Map<String, Object> map = new HashMap<String, Object>();
-			res = "{ \"car_num\" : \""+info.getCar_num()+"\" , \"ration\" : \""+info.getRatio()+"\" }"; 
-			System.out.println("res : " + res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return res;
+    public Map<String, Object> carinfo(@RequestBody GisVO vo) {
+		GisVO info = service.getCarInfo(vo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("map", map);
+		return map;
     }
 
 }
