@@ -67,6 +67,15 @@ function addNewLayer(map) {
 	        })
 	        .then(response => response.json())
 	        .then(info => {
+	        	
+        	    // 데이터가 없는 경우 응답 확인
+	        	if (!info || (info.time == '00:00:00' && info.ratio == 0)) {
+	                alert('데이터가 없습니다.');
+	                document.getElementById('time').innerText = '데이터 없음';
+	                document.getElementById('ratio').innerText = '데이터 없음';
+	                return;
+	            }
+	            
 	        	var ratio = info.ratio;
 	            var time = info.time;
 
@@ -77,9 +86,10 @@ function addNewLayer(map) {
 	            // 변수 값으로 화면에 출력
 	            document.getElementById('time').innerText = time;
 	            document.getElementById('ratio').innerText = ratio;
-
+	            
 	        });
 	    } catch(e) {
+	    	
 	        console.log('fetchPost', e);
 	    }
 
@@ -92,7 +102,7 @@ function addNewLayer(map) {
 	            params: {
 	            'layers' : 'geoserver:Clean_O',
 	            'tiled' : 'true',
-	            'VIEWPARAMS': 'date:' + date + '; car_num:' + car_num // 올바른 파라미터 형식
+	            'viewparams': 'date:' + date + '; car_num:' + car_num // 올바른 파라미터 형식
 	            },
 	            serverType: 'geoserver'
 	        })
@@ -105,11 +115,24 @@ function addNewLayer(map) {
 	            params: {
 	            'layers' : 'geoserver:Clean_X',
 	            'tiled' : 'true',
-	            'viewparams' : 'date:' + '2023-08-29'
+	            'viewparams': 'date:' + date + '; car_num:' + car_num
 	            },
 	            serverType: 'geoserver'
 	        })
 	     })
+	    
+//	    var route = new ol.layer.Tile({
+//	        source: new ol.source.TileWMS({
+//	            //Vworld Tile 변경
+//	            url: 'http://localhost:8080/geoserver/opengis/wms',
+//	            params: {
+//	            'layers' : 'geoserver: route',
+//	            'tiled' : 'true',
+//	            'viewparams': 'date:' + date
+//	            },
+//	            serverType: 'geoserver'
+//	        })
+//	     })
 	    
 	    
 	    // 중복된 레이어가 있는지 확인하고 제거
@@ -206,18 +229,7 @@ function addNewLayer(map) {
         })
      })
     
-//    var route = new ol.layer.Tile({
-//        source: new ol.source.TileWMS({
-//            //Vworld Tile 변경
-//            url: 'http://localhost:8080/geoserver/opengis/wms',
-//            params: {
-//            'layers' : 'geoserver: route',
-//            'tiled' : 'true'
-//            },
-//            serverType: 'geoserver'
-//        })
-//     })
-//    
+    
     
      map.addLayer(boundary);
     //  map.addLayer(link);
