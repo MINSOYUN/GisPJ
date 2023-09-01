@@ -35,72 +35,75 @@ function init() {
     map.addControl(FullScreen);
 
     addNewLayer(map);
-    buttonMap(map)
 
 }
 
 function buttonMap(map){
 	
-// 날짜 '확인' 버튼 눌렀을 때
-$("#confirmButton").click(function() {
-	console.log('확인');
-	
-	// 날짜에 따른 운행시간과 청소 비율 계산
-    const date = document.getElementById('selectedDate').value;   // 날짜
-    const car_num = document.querySelector('.carNum').textContent;   // 차량번호
 
-    const url = '/gis/carinfo';
-    const data = {car_num: car_num, date : date};
-  
-    console.log('car_num : ',car_num);
-    
-    try{
-        fetch(url
-              , {method : 'post' 
-                 , headers : {'Content-Type' : 'application/json'}
-                 , body : JSON.stringify(data)})
-           .then(response => response.json())
-           .then(map => addNewLayer(map));
-     } catch(e){
-        console.log('fetchPost', e);
-     }
-     
-    
-    var Clean_O = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            //Vworld Tile 변경
-            url: 'http://localhost:8080/geoserver/opengis/wms',
-            params: {
-            'layers' : 'geoserver:Clean_O',
-            'tiled' : 'true',
-            'VIEWPARAMS': 'date:' + date + '; car_num:' + car_num // 올바른 파라미터 형식
-            },
-            serverType: 'geoserver'
-        })
-     })
-
-     var Clean_X = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            //Vworld Tile 변경
-            url: 'http://localhost:8080/geoserver/opengis/wms',
-            params: {
-            'layers' : 'geoserver:Clean_X',
-            'tiled' : 'true',
-            'viewparams' : 'date:' + '2023-08-29'
-            },
-            serverType: 'geoserver'
-        })
-     })
-    
-    map.addLayer(Clean_O);
-    map.addLayer(Clean_X);
-    
-});
 }
 
 
 // 이곳에 geoServer의 레이어 추가
 function addNewLayer(map) {
+	
+	// 날짜 '확인' 버튼 눌렀을 때
+	$("#confirmButton").click(function() {
+		console.log('확인');
+		
+		// 날짜에 따른 운행시간과 청소 비율 계산
+	    const date = document.getElementById('selectedDate').value;   // 날짜
+	    const car_num = document.querySelector('.carNum').textContent;   // 차량번호
+
+	    const url = '/gis/carinfo';
+	    const data = {car_num: car_num, date : date};
+	  
+	    console.log('car_num : ',car_num);
+	    console.log('date : ',date);
+	    
+	    try{
+	        fetch(url
+	              , {method : 'post' 
+	                 , headers : {'Content-Type' : 'application/json'}
+	                 , body : JSON.stringify(data)})
+	           .then(response => response.json())
+//	           .then(map => addNewLayer(map));
+	    	
+	     } catch(e){
+	        console.log('fetchPost', e);
+	     }
+	     
+	    
+	    var Clean_O = new ol.layer.Tile({
+	        source: new ol.source.TileWMS({
+	            //Vworld Tile 변경
+	            url: 'http://localhost:8080/geoserver/opengis/wms',
+	            params: {
+	            'layers' : 'geoserver:Clean_O',
+	            'tiled' : 'true',
+	            'VIEWPARAMS': 'date:' + date + '; car_num:' + car_num // 올바른 파라미터 형식
+	            },
+	            serverType: 'geoserver'
+	        })
+	     })
+
+	     var Clean_X = new ol.layer.Tile({
+	        source: new ol.source.TileWMS({
+	            //Vworld Tile 변경
+	            url: 'http://localhost:8080/geoserver/opengis/wms',
+	            params: {
+	            'layers' : 'geoserver:Clean_X',
+	            'tiled' : 'true',
+	            'viewparams' : 'date:' + '2023-08-29'
+	            },
+	            serverType: 'geoserver'
+	        })
+	     })
+	    
+	    map.addLayer(Clean_O);
+	    map.addLayer(Clean_X);
+	});
+	
     
     // 용인시
     var boundary = new ol.layer.Tile({

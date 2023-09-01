@@ -40,7 +40,7 @@ public class GisController {
     public Map<String, Object> carinfo(@RequestBody GisVO vo) {
 		GisVO info = service.getCarInfo(vo);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("map", map);
+		map.put("map", info);
 		return map;
     }
 
