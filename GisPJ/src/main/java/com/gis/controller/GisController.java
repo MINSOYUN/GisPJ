@@ -34,14 +34,14 @@ public class GisController {
 		}
 	}
 	
+
 	
 	@PostMapping("/carinfo")
-    @ResponseBody
-    public Map<String, Object> carinfo(@RequestBody GisVO vo) {
-		GisVO info = service.getCarInfo(vo);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("map", info);
-		return map;
-    }
+	@ResponseBody
+	public GisVO carinfo(@RequestBody GisVO vo) {
+	    GisVO info = service.getCarInfo(vo);
+	    return info;
+	}
+
 
 }

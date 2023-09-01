@@ -58,17 +58,31 @@ function addNewLayer(map) {
 	    console.log('car_num : ',car_num);
 	    console.log('date : ',date);
 	    
-	    try{
-	        fetch(url
-	              , {method : 'post' 
-	                 , headers : {'Content-Type' : 'application/json'}
-	                 , body : JSON.stringify(data)})
-	           .then(response => response.json())
-//	           .then(map => addNewLayer(map));
-	    	
-	     } catch(e){
+	 // 데이터 전송을 위한 fetch 요청
+	    try {
+	        fetch(url, {
+	            method: 'post', 
+	            headers: { 'Content-Type': 'application/json' },
+	            body: JSON.stringify(data)
+	        })
+	        .then(response => response.json())
+	        .then(info => {
+	        	var ratio = info.ratio;
+	            var time = info.time;
+
+	            // ratio와 time 값을 활용하여 원하는 작업 수행
+	            console.log('ratio:', ratio);
+	            console.log('time:', time);
+	            
+	            // 변수 값으로 화면에 출력
+	            document.getElementById('time').innerText = time;
+	            document.getElementById('ratio').innerText = ratio;
+
+	        });
+	    } catch(e) {
 	        console.log('fetchPost', e);
-	     }
+	    }
+
 	     
 	    
 	    var Clean_O = new ol.layer.Tile({
