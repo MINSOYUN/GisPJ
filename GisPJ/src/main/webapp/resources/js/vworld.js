@@ -38,14 +38,11 @@ function init() {
 
 }
 
-function buttonMap(map){
-	
-
-}
-
 
 // 이곳에 geoServer의 레이어 추가
 function addNewLayer(map) {
+	
+	var cleanLayers = []; // 현재 표시 중인 Clean_O와 Clean_X 레이어를 저장할 배열
 	
 	// 날짜 '확인' 버튼 눌렀을 때
 	$("#confirmButton").click(function() {
@@ -100,8 +97,20 @@ function addNewLayer(map) {
 	        })
 	     })
 	    
+	    
+	    // 중복된 레이어가 있는지 확인하고 제거
+	    cleanLayers.forEach(layer => {
+	        map.removeLayer(layer);
+	    });
+	    cleanLayers = []; // 배열 초기화
+	    
+	    // 배열에 추가
+	    cleanLayers.push(Clean_O);
+	    cleanLayers.push(Clean_X);
+	    
 	    map.addLayer(Clean_O);
-	    map.addLayer(Clean_X);
+//	    map.addLayer(Clean_X);
+//	    map.addLayer(route);
 	});
 	
     
@@ -183,12 +192,26 @@ function addNewLayer(map) {
         })
      })
     
+//    var route = new ol.layer.Tile({
+//        source: new ol.source.TileWMS({
+//            //Vworld Tile 변경
+//            url: 'http://localhost:8080/geoserver/opengis/wms',
+//            params: {
+//            'layers' : 'geoserver: route',
+//            'tiled' : 'true'
+//            },
+//            serverType: 'geoserver'
+//        })
+//     })
+//    
+    
      map.addLayer(boundary);
     //  map.addLayer(link);
     //  map.addLayer(node);
     //  map.addLayer(gas);
     //  map.addLayer(ELSchool);
     //  map.addLayer(HSchool);
+//    map.addLayer(route);
 }
 
 
