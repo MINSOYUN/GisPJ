@@ -54,7 +54,7 @@
         <button id="hybrid" class="btn btn-primary" type="button">하이브리드</button>
     </div> 
 
-    <div class="box nd" style="margin: 0px; padding-top: 20px;">
+    <div class="box nd" style="padding-top: 20px; margin: 0 auto">
       <strong style="display: block; font-weight: bold;">차량 목록</strong>
       <hr>
       <c:forEach items="${list}" var="car" step="1">

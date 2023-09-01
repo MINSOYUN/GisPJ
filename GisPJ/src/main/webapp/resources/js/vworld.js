@@ -100,7 +100,7 @@ function addNewLayer(map) {
 	            //Vworld Tile 변경
 	            url: 'http://localhost:8080/geoserver/opengis/wms',
 	            params: {
-	            'layers' : 'geoserver:Clean_O',
+	            'layers' : 'opengis:Clean_O',
 	            'tiled' : 'true',
 	            'viewparams': 'date:' + date + '; car_num:' + car_num // 올바른 파라미터 형식
 	            },
@@ -113,7 +113,7 @@ function addNewLayer(map) {
 	            //Vworld Tile 변경
 	            url: 'http://localhost:8080/geoserver/opengis/wms',
 	            params: {
-	            'layers' : 'geoserver:Clean_X',
+	            'layers' : 'opengis:Clean_X',
 	            'tiled' : 'true',
 	            'viewparams': 'date:' + date + '; car_num:' + car_num
 	            },
@@ -121,18 +121,18 @@ function addNewLayer(map) {
 	        })
 	     })
 	    
-//	    var route = new ol.layer.Tile({
-//	        source: new ol.source.TileWMS({
-//	            //Vworld Tile 변경
-//	            url: 'http://localhost:8080/geoserver/opengis/wms',
-//	            params: {
-//	            'layers' : 'geoserver: route',
-//	            'tiled' : 'true',
-//	            'viewparams': 'date:' + date
-//	            },
-//	            serverType: 'geoserver'
-//	        })
-//	     })
+	    var path = new ol.layer.Tile({
+	        source: new ol.source.TileWMS({
+	            //Vworld Tile 변경
+	            url: 'http://localhost:8080/geoserver/opengis/wms',
+	            params: {
+	            'layers' : 'opengis:route',
+	            'tiled' : 'true',
+	            'viewparams': 'date:' + date
+	            },
+	            serverType: 'geoserver'
+	        })
+	     })
 	    
 	    
 	    // 중복된 레이어가 있는지 확인하고 제거
@@ -147,7 +147,7 @@ function addNewLayer(map) {
 	    
 	    map.addLayer(Clean_O);
 //	    map.addLayer(Clean_X);
-//	    map.addLayer(route);
+	    map.addLayer(path);
 	});
 	
     
@@ -157,7 +157,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:MAP',
+            'layers' : 'opengis:MAP',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -170,7 +170,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:LINK',
+            'layers' : 'opengis:LINK',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -183,7 +183,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:NODE',
+            'layers' : 'opengis:NODE',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -196,7 +196,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:주유소',
+            'layers' : 'opengis:주유소',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -209,7 +209,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:ELSchool',
+            'layers' : 'opengis:ELSchool',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -222,7 +222,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:HSchool',
+            'layers' : 'opengis:HSchool',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
