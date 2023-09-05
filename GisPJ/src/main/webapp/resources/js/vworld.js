@@ -35,72 +35,121 @@ function init() {
     map.addControl(FullScreen);
 
     addNewLayer(map);
-    buttonMap(map)
 
-}
-
-function buttonMap(map){
-	
-// 날짜 '확인' 버튼 눌렀을 때
-$("#confirmButton").click(function() {
-	console.log('확인');
-	
-	// 날짜에 따른 운행시간과 청소 비율 계산
-    const date = document.getElementById('selectedDate').value;   // 날짜
-    const car_num = document.querySelector('.carNum').textContent;   // 차량번호
-
-    const url = '/gis/carinfo';
-    const data = {car_num: car_num, date : date};
-  
-    console.log('car_num : ',car_num);
-    
-    try{
-        fetch(url
-              , {method : 'post' 
-                 , headers : {'Content-Type' : 'application/json'}
-                 , body : JSON.stringify(data)})
-           .then(response => response.json())
-           .then(map => addNewLayer(map));
-     } catch(e){
-        console.log('fetchPost', e);
-     }
-     
-    
-    var Clean_O = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            //Vworld Tile 변경
-            url: 'http://localhost:8080/geoserver/opengis/wms',
-            params: {
-            'layers' : 'geoserver:Clean_O',
-            'tiled' : 'true',
-            'VIEWPARAMS': 'date:' + date + '; car_num:' + car_num // 올바른 파라미터 형식
-            },
-            serverType: 'geoserver'
-        })
-     })
-
-     var Clean_X = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            //Vworld Tile 변경
-            url: 'http://localhost:8080/geoserver/opengis/wms',
-            params: {
-            'layers' : 'geoserver:Clean_X',
-            'tiled' : 'true',
-            'viewparams' : 'date:' + '2023-08-29'
-            },
-            serverType: 'geoserver'
-        })
-     })
-    
-    map.addLayer(Clean_O);
-    map.addLayer(Clean_X);
-    
-});
 }
 
 
 // 이곳에 geoServer의 레이어 추가
 function addNewLayer(map) {
+	
+	var cleanLayers = []; // 현재 표시 중인 Clean_O와 Clean_X 레이어를 저장할 배열
+	
+	// 날짜 '확인' 버튼 눌렀을 때
+	$("#confirmButton").click(function() {
+		console.log('확인');
+		
+		// 날짜에 따른 운행시간과 청소 비율 계산
+	    const date = document.getElementById('selectedDate').value;   // 날짜
+	    const car_num = document.querySelector('.carNum').textContent;   // 차량번호
+
+	    const url = '/gis/carinfo';
+	    const data = {car_num: car_num, date : date};
+	  
+	    console.log('car_num : ',car_num);
+	    console.log('date : ',date);
+	    
+	 // 데이터 전송을 위한 fetch 요청
+	    try {
+	        fetch(url, {
+	            method: 'post', 
+	            headers: { 'Content-Type': 'application/json' },
+	            body: JSON.stringify(data)
+	        })
+	        .then(response => response.json())
+	        .then(info => {
+	        	
+        	    // 데이터가 없는 경우 응답 확인
+	        	if (!info || (info.time == '00:00:00' && info.ratio == 0)) {
+	                alert('데이터가 없습니다.');
+	                document.getElementById('time').innerText = '데이터 없음';
+	                document.getElementById('ratio').innerText = '데이터 없음';
+	                return;
+	            }
+	            
+	        	var ratio = info.ratio;
+	            var time = info.time;
+
+	            // ratio와 time 값을 활용하여 원하는 작업 수행
+	            console.log('ratio:', ratio);
+	            console.log('time:', time);
+	            
+	            // 변수 값으로 화면에 출력
+	            document.getElementById('time').innerText = time;
+	            document.getElementById('ratio').innerText = ratio;
+	            
+	        });
+	    } catch(e) {
+	    	
+	        console.log('fetchPost', e);
+	    }
+
+	     
+	    
+	    var Clean_O = new ol.layer.Tile({
+	        source: new ol.source.TileWMS({
+	            url: 'http://localhost:8080/geoserver/opengis/wms',
+	            params: {
+	            'layers' : 'opengis:Clean_O',
+	            'tiled' : 'true',
+	            'viewparams': 'date:' + date + '; car_num:' + car_num // 올바른 파라미터 형식
+	            },
+	            serverType: 'geoserver'
+	        })
+	     })
+
+	     var Clean_X = new ol.layer.Tile({
+	        source: new ol.source.TileWMS({
+	            url: 'http://localhost:8080/geoserver/opengis/wms',
+	            params: {
+	            'layers' : 'opengis:Clean_X',
+	            'tiled' : 'true',
+	            'viewparams': 'date:' + date + '; car_num:' + car_num
+	            },
+	            serverType: 'geoserver'
+	        })
+	     })
+	    
+	    var path = new ol.layer.Tile({
+	        source: new ol.source.TileWMS({
+	            //Vworld Tile 변경
+	            url: 'http://localhost:8080/geoserver/opengis/wms',
+	            params: {
+	            'layers' : 'opengis:route',
+	            'tiled' : 'true',
+	            'viewparams': 'date:' + date + '; car_num:' + car_num
+	            },
+	            serverType: 'geoserver'
+	        })
+	     })
+	    
+	    
+	    // Clean_O -> 중복된 레이어가 있는지 확인하고 제거
+	    cleanLayers.forEach(layer => {
+	        map.removeLayer(layer);
+	    });
+	    
+	    
+	    // 배열에 추가
+	    cleanLayers.push(Clean_O);
+	    cleanLayers.push(Clean_X);
+	    cleanLayers.push(path);
+	    
+	    
+	    map.addLayer(Clean_O);
+	    map.addLayer(Clean_X);
+	    map.addLayer(path);
+	});
+	
     
     // 용인시
     var boundary = new ol.layer.Tile({
@@ -108,7 +157,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:MAP',
+            'layers' : 'opengis:MAP',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -121,7 +170,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:LINK',
+            'layers' : 'opengis:LINK',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -134,7 +183,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:NODE',
+            'layers' : 'opengis:NODE',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -147,7 +196,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:주유소',
+            'layers' : 'opengis:주유소',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -160,7 +209,7 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:ELSchool',
+            'layers' : 'opengis:ELSchool',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
@@ -173,16 +222,18 @@ function addNewLayer(map) {
             //Vworld Tile 변경
             url: 'http://localhost:8080/geoserver/opengis/wms',
             params: {
-            'layers' : 'geoserver:HSchool',
+            'layers' : 'opengis:HSchool',
             'tiled' : 'true'
             },
             serverType: 'geoserver'
         })
      })
     
+    
+    
      map.addLayer(boundary);
-    //  map.addLayer(link);
-    //  map.addLayer(node);
+//      map.addLayer(link);
+//      map.addLayer(node);
     //  map.addLayer(gas);
     //  map.addLayer(ELSchool);
     //  map.addLayer(HSchool);

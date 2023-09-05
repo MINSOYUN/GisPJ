@@ -45,8 +45,7 @@
   <!-- 사이드바 -->
   <div class="sidebar">
     <div class="top-text" style="display: flex; align-items: center;">
-      <img src="\resources\img\용인시.png" alt="용인시" style="margin-right: 10px; height: 50px; width: 50px;">
-      용인시 청소 관제 시스템
+      <img src="\resources\img\용인시.png" alt="용인시" style="margin-right: 10px; height: 50px; width: 50px;">용인시 청소 관제 시스템
     </div>
     <div class="box st">
       <img src="\resources\img\지도.PNG" alt="지도" style="margin-right: 10px; height: 25px; width: 25px; border-radius: 5px;">
@@ -55,21 +54,21 @@
         <button id="hybrid" class="btn btn-primary" type="button">하이브리드</button>
     </div> 
 
-    <div class="box nd" style="margin: 0px; padding-top: 20px;">
+    <div class="box nd" style="padding-top: 20px; margin: 0 auto">
       <strong style="display: block; font-weight: bold;">차량 목록</strong>
       <hr>
       <c:forEach items="${list}" var="car" step="1">
 	      <button class="vehicle info1" style="padding-top: 10px;" data-car-num="${car.car_num}">🚗 ${car.car_num }</button>
       </c:forEach>
     </div>
-      
+    
     <div class="box rd nonhidden" id='nonhidden'>
       <strong class="carNum">${car.car_num }</strong>
       <hr>
       <div class="details" style=" text-align:left;">
         <div style="margin: 30px 0px;">날짜선택 : <input type="date" id="selectedDate"><button class="btn btn-primary" id="confirmButton" style="padding: 3px 6px; margin-left: 8px;">확인</button></div>
-        <div style="margin: 30px 0px;">운행시간 : 08:15:14</div>
-        <div style="margin: 30px 0px;">청소비율 : 85%</div>
+        <div style="margin: 30px 0px;">운행시간 : <span id="time"></span></div>
+        <div style="margin: 30px 0px;">청소비율 : <span id="ratio"></span></div>
       </div>
       <div>
         <button class="folded">접기</button>
