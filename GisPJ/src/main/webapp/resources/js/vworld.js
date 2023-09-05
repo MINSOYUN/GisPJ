@@ -97,7 +97,6 @@ function addNewLayer(map) {
 	    
 	    var Clean_O = new ol.layer.Tile({
 	        source: new ol.source.TileWMS({
-	            //Vworld Tile 변경
 	            url: 'http://localhost:8080/geoserver/opengis/wms',
 	            params: {
 	            'layers' : 'opengis:Clean_O',
@@ -110,7 +109,6 @@ function addNewLayer(map) {
 
 	     var Clean_X = new ol.layer.Tile({
 	        source: new ol.source.TileWMS({
-	            //Vworld Tile 변경
 	            url: 'http://localhost:8080/geoserver/opengis/wms',
 	            params: {
 	            'layers' : 'opengis:Clean_X',
@@ -128,25 +126,27 @@ function addNewLayer(map) {
 	            params: {
 	            'layers' : 'opengis:route',
 	            'tiled' : 'true',
-	            'viewparams': 'date:' + date
+	            'viewparams': 'date:' + date + '; car_num:' + car_num
 	            },
 	            serverType: 'geoserver'
 	        })
 	     })
 	    
 	    
-	    // 중복된 레이어가 있는지 확인하고 제거
+	    // Clean_O -> 중복된 레이어가 있는지 확인하고 제거
 	    cleanLayers.forEach(layer => {
 	        map.removeLayer(layer);
 	    });
-	    cleanLayers = []; // 배열 초기화
+	    
 	    
 	    // 배열에 추가
 	    cleanLayers.push(Clean_O);
 	    cleanLayers.push(Clean_X);
+	    cleanLayers.push(path);
+	    
 	    
 	    map.addLayer(Clean_O);
-//	    map.addLayer(Clean_X);
+	    map.addLayer(Clean_X);
 	    map.addLayer(path);
 	});
 	
@@ -232,12 +232,11 @@ function addNewLayer(map) {
     
     
      map.addLayer(boundary);
-    //  map.addLayer(link);
-    //  map.addLayer(node);
+//      map.addLayer(link);
+//      map.addLayer(node);
     //  map.addLayer(gas);
     //  map.addLayer(ELSchool);
     //  map.addLayer(HSchool);
-//    map.addLayer(route);
 }
 
 
