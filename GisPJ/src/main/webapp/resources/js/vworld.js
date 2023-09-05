@@ -133,6 +133,33 @@ function addNewLayer(map) {
 	     })
 	    
 	    
+      // point 넘버링
+        var startPoint = new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+                url: 'http://localhost:8080/geoserver/opengis/wms',
+                params: {
+                    'layers': 'opengis:startPoint',
+                    'tiled': 'true',
+                    'viewparams': 'date:' + date + '; car_num:' + car_num
+                },
+                serverType: 'geoserver',
+            })
+        });
+	    
+	 // point 넘버링
+        var endPoint = new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+                url: 'http://localhost:8080/geoserver/opengis/wms',
+                params: {
+                    'layers': 'opengis:endPoint',
+                    'tiled': 'true',
+                    'viewparams': 'date:' + date + '; car_num:' + car_num
+                },
+                serverType: 'geoserver',
+            })
+        });
+
+	    
 	    // Clean_O -> 중복된 레이어가 있는지 확인하고 제거
 	    cleanLayers.forEach(layer => {
 	        map.removeLayer(layer);
@@ -143,11 +170,15 @@ function addNewLayer(map) {
 	    cleanLayers.push(Clean_O);
 	    cleanLayers.push(Clean_X);
 	    cleanLayers.push(path);
+	    cleanLayers.push(startPoint);
+	    cleanLayers.push(endPoint);
 	    
 	    
 	    map.addLayer(Clean_O);
 	    map.addLayer(Clean_X);
 	    map.addLayer(path);
+	    map.addLayer(startPoint);
+	    map.addLayer(endPoint);
 	});
 	
     
