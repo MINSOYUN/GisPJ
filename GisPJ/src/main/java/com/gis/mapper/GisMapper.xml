@@ -8,20 +8,24 @@
 	</select>
 	
 	<select id="getCarInfo" resultType="com.gis.vo.GisVO">
-	    SELECT 
-	        COALESCE(
-	            (SELECT TO_CHAR(MAX("time")::time - MIN("time"), 'HH24:MI:SS') AS timediff
-	                FROM points
-	                WHERE car_num = #{car_num} AND date = #{date}), '00:00:00') AS "time",
-	        COALESCE(
-	            (SELECT 
-	                CASE 
-	                    WHEN (SELECT COUNT(*) FROM points WHERE car_num = #{car_num} AND date = #{date}) = 0
-	                    THEN 0
-	                    ELSE TRUNC((COUNT(*)::float / (SELECT COUNT(*) FROM points WHERE car_num = #{car_num} AND date = #{date})*100)::numeric,2)
-	                END
-	                FROM points
-	                WHERE car_num = #{car_num} AND date = #{date} AND noise >= 80 AND rpm >= 1500), 0) AS ratio
+			   SELECT 
+		    (SELECT TO_CHAR(MAX("time")::time - MIN("time"), 'HH24:MI:SS') AS timediff
+		     FROM points
+		     WHERE car_num = #{car_num} AND date = #{date}) AS "time",
+		    (SELECT 
+		        CASE 
+		            WHEN (SELECT COUNT(*) FROM points WHERE car_num = #{car_num} AND date = #{date}) = 0
+		            THEN null
+		            ELSE TRUNC((COUNT(*)::float / (SELECT COUNT(*) FROM points WHERE car_num = #{car_num} AND date = #{date})*100)::numeric, 2)
+		        END
+		    FROM points
+		    WHERE car_num = #{car_num} AND date = #{date} AND noise >= 80 AND rpm >= 1500) AS ratio,
+		    (SELECT TO_CHAR(lon::numeric, 'FM9999.9999')
+		     FROM points
+		     WHERE car_num = #{car_num} AND date = #{date} AND "time" = (SELECT MIN("time") FROM points WHERE car_num = #{car_num} AND date = #{date})) AS start_lon,
+		    (SELECT TO_CHAR(lat::numeric, 'FM9999.9999')
+		     FROM points
+		     WHERE car_num = #{car_num} AND date = #{date} AND "time" = (SELECT MIN("time") FROM points WHERE car_num = #{car_num} AND date = #{date})) AS start_lat
 	</select>
 	
 </mapper>

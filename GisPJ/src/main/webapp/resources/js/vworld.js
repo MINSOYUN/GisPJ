@@ -1,3 +1,5 @@
+var map;
+
 // dom ready
 $(document).ready(function() {
     init();
@@ -10,7 +12,7 @@ function init() {
     initProj();
 
     // map 생성
-    var map = new ol.Map({
+    map = new ol.Map({
         
         target: 'map',                          // Map 생성할 div id
         view: new ol.View({
@@ -78,7 +80,9 @@ function addNewLayer(map) {
 	            
 	        	var ratio = info.ratio;
 	            var time = info.time;
-
+	            var lon = parseFloat(info.start_lon);
+	            var lat = parseFloat(info.start_lat);
+	            
 	            // ratio와 time 값을 활용하여 원하는 작업 수행
 	            console.log('ratio:', ratio);
 	            console.log('time:', time);
@@ -86,7 +90,8 @@ function addNewLayer(map) {
 	            // 변수 값으로 화면에 출력
 	            document.getElementById('time').innerText = time;
 	            document.getElementById('ratio').innerText = ratio;
-	            
+
+	    	    zoomToPosition(lon, lat, 15);
 	        });
 	    } catch(e) {
 	    	
@@ -165,7 +170,6 @@ function addNewLayer(map) {
 	        map.removeLayer(layer);
 	    });
 	    
-	    
 	    // 배열에 추가
 	    cleanLayers.push(Clean_O);
 	    cleanLayers.push(Clean_X);
@@ -179,9 +183,27 @@ function addNewLayer(map) {
 	    map.addLayer(path);
 	    map.addLayer(startPoint);
 	    map.addLayer(endPoint);
+	    
 	});
 	
+	
+	//줌 애니메이션 메소드
+    function zoomToPosition(lon, lat, zoomLevel) {
+        var view = map.getView();
+        var currentCenter = view.getCenter();
+        var currentZoom = view.getZoom();
+        console.log('view', view);
+
+        var duration = 500; // 애니메이션 지속 시간. 값이 작을수록 줌이 빠름
+
+        map.getView().animate({
+            center: ol.proj.fromLonLat([lon, lat]),
+            zoom: zoomLevel,
+            duration: duration,
+        });
+    }
     
+	
     // 용인시
     var boundary = new ol.layer.Tile({
         source: new ol.source.TileWMS({
@@ -356,18 +378,15 @@ function initBaseLayerSelect(map) {
 $(function(){
 
     $('#normal').click(function(){
-
         $('#baseLayer').val('vworld_base').trigger('change');
     });
 
 
     $('#wisung').click(function(){
-
         $('#baseLayer').val('vworld_satellite').trigger('change');
     });
 
     $('#hybrid').click(function(){
-
         $('#baseLayer').val('vworld_hybrid').trigger('change');
     });
 
