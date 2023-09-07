@@ -69,6 +69,8 @@
         <div style="margin: 30px 0px;">날짜선택 : <input type="date" id="selectedDate"><button class="btn btn-primary" id="confirmButton" style="padding: 3px 6px; margin-left: 8px;">확인</button></div>
         <div style="margin: 30px 0px;">운행시간 : <span id="time"></span></div>
         <div style="margin: 30px 0px;">청소비율 : <span id="ratio"></span>%</div>
+        <input type="hidden" name="lon" id="lon">
+        <input type="hidden" name="lat" id="lat">
       </div>
       <div>
         <button class="folded">접기</button>

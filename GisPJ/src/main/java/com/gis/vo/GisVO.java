@@ -16,5 +16,6 @@ public class GisVO {
 	
 	private String ratio;
 	
-	private String carNum;
+	private String start_lon;
+	private String start_lat;
 }
