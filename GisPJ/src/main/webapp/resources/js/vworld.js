@@ -75,6 +75,7 @@ function addNewLayer(map) {
 	                alert('데이터가 없습니다.');
 	                document.getElementById('time').innerText = '데이터 없음';
 	                document.getElementById('ratio').innerText = '데이터 없음';
+
 	                return;
 	            }
 	            
@@ -131,7 +132,7 @@ function addNewLayer(map) {
 	            params: {
 	            'layers' : 'opengis:route',
 	            'tiled' : 'true',
-	            'viewparams': 'date:' + date + '; car_num:' + car_num
+	            'viewparams': 'date:' + date
 	            },
 	            serverType: 'geoserver'
 	        })
@@ -389,5 +390,41 @@ $(function(){
     $('#hybrid').click(function(){
         $('#baseLayer').val('vworld_hybrid').trigger('change');
     });
-
+    
 });
+
+
+
+const fileDropArea = document.getElementById("fileDropArea");
+
+// 드래그 앤 드롭 이벤트 처리
+fileDropArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    fileDropArea.classList.add("hover");
+});
+
+fileDropArea.addEventListener("dragleave", () => {
+    fileDropArea.classList.remove("hover");
+});
+
+fileDropArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    fileDropArea.classList.remove("hover");
+
+    const files = e.dataTransfer.files;
+    handleFiles(files);
+});
+
+
+// 파일 업로드 처리 함수
+function handleFiles(files) {
+    for (const file of files) {
+        if (file.type === "text/csv") {
+            // CSV 파일을 업로드하는 로직을 이 부분에 추가하세요.
+            // 예: 파일을 서버로 업로드하거나, 파일 내용을 처리하는 등의 작업 수행
+            console.log("업로드한 파일 이름: " + file.name);
+        } else {
+            alert("CSV 파일만 업로드할 수 있습니다.");
+        }
+    }
+}

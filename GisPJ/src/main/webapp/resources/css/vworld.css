@@ -131,6 +131,35 @@
     outline: none;
   }
   
+ 
+ 
+ 
+/* 파일 업로드 스타일 */
+.upload {
+    padding: 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border: 1px dashed #cccccc;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.upload p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555555;
+}
+
+.upload:hover {
+    border-color: #007bff;
+}
+
+
+
+ 
+  
+  
   /* 메인 컨텐츠 스타일 */
   .content {
     flex: 3; /* 가로 3/4 */
