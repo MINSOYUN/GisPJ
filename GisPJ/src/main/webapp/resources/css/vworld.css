@@ -6,6 +6,16 @@
     display: flex;
   }
   
+  /* 노트북 사이즈에 맞는 css 적용 */
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+	  /* 화면 너비가 768px에서 1023px 사이인 경우의 스타일을 여기에 지정 */
+	  body {
+	    
+	    
+	  }
+  }
+
+  
   /* 사이드바 스타일 */
   .sidebar {
     width: 20%;

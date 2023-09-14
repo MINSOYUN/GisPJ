@@ -4,6 +4,11 @@ var map;
 $(document).ready(function() {
     init();
     
+    var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+    console.log("현재 창의 너비: " + windowWidth + "px");
+
+    
 });
 
 function init() {
