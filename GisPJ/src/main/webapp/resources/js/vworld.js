@@ -7,9 +7,46 @@ $(document).ready(function() {
     var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
     console.log("현재 창의 너비: " + windowWidth + "px");
-
     
 });
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const fileDropArea = document.getElementById("fileDropArea");
+
+  	// 드래그 앤 드롭 이벤트 처리
+  	fileDropArea.addEventListener("dragover", (e) => {
+  	   e.preventDefault();
+  	   fileDropArea.classList.add("hover");
+  	});
+  	
+  	fileDropArea.addEventListener("dragleave", () => {
+  	   fileDropArea.classList.remove("hover");
+  	});
+  	
+  	fileDropArea.addEventListener("drop", (e) => {
+  	   e.preventDefault();
+  	   fileDropArea.classList.remove("hover");
+  	
+  	   const files = e.dataTransfer.files;
+  	   handleFiles(files);
+  	});
+
+  //파일 업로드 처리 함수
+  function handleFiles(files) {
+  	for (const file of files) {
+  	   if (file.type === "text/csv") {
+  	       // CSV 파일을 업로드하는 로직 추가
+  	       console.log("업로드한 파일 이름: " + file.name);
+  	   } else {
+  	       alert("CSV 파일만 업로드할 수 있습니다.");
+  	   }
+  	}
+  }
+  
+});
+
 
 function init() {
 
@@ -398,39 +435,3 @@ $(function(){
     
 });
 
-
-
-const fileDropArea = document.getElementById("fileDropArea");
-
-//fileDropArea가 null이 아닌 경우에만 이벤트 리스너를 등록
-if (fileDropArea) {
-	// 드래그 앤 드롭 이벤트 처리
-	fileDropArea.addEventListener("dragover", (e) => {
-	   e.preventDefault();
-	   fileDropArea.classList.add("hover");
-	});
-	
-	fileDropArea.addEventListener("dragleave", () => {
-	   fileDropArea.classList.remove("hover");
-	});
-	
-	fileDropArea.addEventListener("drop", (e) => {
-	   e.preventDefault();
-	   fileDropArea.classList.remove("hover");
-	
-	   const files = e.dataTransfer.files;
-	   handleFiles(files);
-	});
-}
-
-//파일 업로드 처리 함수
-function handleFiles(files) {
-	for (const file of files) {
-	   if (file.type === "text/csv") {
-	       // CSV 파일을 업로드하는 로직 추가
-	       console.log("업로드한 파일 이름: " + file.name);
-	   } else {
-	       alert("CSV 파일만 업로드할 수 있습니다.");
-	   }
-	}
-}
