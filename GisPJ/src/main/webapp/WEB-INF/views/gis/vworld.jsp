@@ -76,6 +76,16 @@
         <button class="folded">접기</button>
       </div>
     </div>
+    
+	<!-- 파일 업로드 -->
+	<div class="box upload" id="fileDropArea">
+	    <strong>CSV 파일 업로드</strong>
+	    <hr>
+	    <p>CSV 파일을 이 영역으로 드래그 앤 드롭하세요.</p>
+	    
+	</div>
+
+   
   </div>
   
   <!-- 메인 컨텐츠 -->
@@ -84,6 +94,8 @@
       <select id="baseLayer" style='display:none;'></select>
     </div>
   </div>
+  
+  
 
 </body>
 </html>
